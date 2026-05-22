@@ -1,25 +1,37 @@
 # Plataforma Juvenil de Participación
 
-Este repositorio será utilizado para construir progresivamente un proyecto pedagógico sobre participación juvenil, transparencia, control ciudadano y tecnología.
+Bienvenido al repositorio de este proyecto educativo. En este espacio se explora cómo las herramientas tecnológicas pueden fortalecer los procesos de participación ciudadana joven, asegurando que sean claros y confiables.
 
-## Advertencia
+## Propósito del proyecto
 
-Este proyecto es únicamente académico.
+Este ejercicio busca enseñar cómo la tecnología puede ser un apoyo fundamental en actividades pedagógicas de participación. El enfoque principal está en tres pilares:
 
-No corresponde a una elección real.
-No debe recolectar datos personales reales.
-No debe usarse para campañas reales.
-No debe utilizarse para señalar personas, organizaciones o entidades.
+* Participación Juvenil: Fomentar el involucramiento activo de los jóvenes.
+* Transparencia: Garantizar que los procesos sean visibles para todos.
+* Trazabilidad: Permitir el seguimiento detallado de cada acción realizada en el sistema.
 
-## Herramientas
+## Identidad del proyecto
 
-- GitHub
-- GitHub Codespaces
-- GitHub Copilot
-- HTML
-- JavaScript
-- Node.js en clases posteriores
+* Autor: EsByRrO
+* Proyecto: Plataforma Juvenil de Participación
 
-## Evidencia
+## Reglas de cuidado y seguridad
 
-Cada estudiante debe trabajar desde su propio fork y publicar sus avances en una rama de trabajo.
+Para garantizar un entorno de aprendizaje seguro y ético, este proyecto se rige por las siguientes normas obligatorias:
+
+1. Uso de datos ficticios: No se permite el uso de información real en ninguna parte del desarrollo.
+2. Protección de identidad: Queda prohibido el uso de números de cédula o documentos de identidad verdaderos.
+3. Información sensible: No se debe incluir información personal que pueda poner en riesgo la privacidad de terceros.
+4. Candidatos simulados: Los nombres de candidatos utilizados en las pruebas son totalmente ficticios y no representan a figuras políticas reales.
+5. Resultados no oficiales: Toda información o resultado generado dentro de esta plataforma tiene un fin estrictamente pedagógico y carece de validez oficial.
+
+## Herramientas utilizadas
+
+Para la construcción y gestión de este proyecto, se emplean las siguientes tecnologías y plataformas:
+
+GitHub
+Espacios de código de GitHub
+GitHub Copilot
+HTML
+JavaScript
+Node.js en clases posteriores
