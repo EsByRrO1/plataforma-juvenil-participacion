@@ -29,9 +29,9 @@ Para garantizar un entorno de aprendizaje seguro y ético, este proyecto se rige
 
 Para la construcción y gestión de este proyecto, se emplean las siguientes tecnologías y plataformas:
 
-GitHub
-Cursor
-Agente de cursor
-HTML
-JavaScript
-Node.js en clases posteriores
+1. GitHub
+2. Cursor
+3. Agente de cursor
+4. HTML
+5. JavaScript
+6. Node.js
