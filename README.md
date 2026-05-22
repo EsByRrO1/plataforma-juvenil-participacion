@@ -12,8 +12,8 @@ Este ejercicio busca enseñar cómo la tecnología puede ser un apoyo fundamenta
 
 ## Identidad del proyecto
 
-* Autor: EsByRrO
-* Proyecto: Plataforma Juvenil de Participación
+* Nombre del estudiante: juan manuel cordoba - EsbyRrO
+* Nombre de la plataforma: Plataforma Juvenil de Participación
 
 ## Reglas de cuidado y seguridad
 
@@ -30,8 +30,8 @@ Para garantizar un entorno de aprendizaje seguro y ético, este proyecto se rige
 Para la construcción y gestión de este proyecto, se emplean las siguientes tecnologías y plataformas:
 
 GitHub
-Espacios de código de GitHub
-GitHub Copilot
+Cursor
+Agente de cursor
 HTML
 JavaScript
 Node.js en clases posteriores
