@@ -82,7 +82,13 @@ h1 {
   box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
 }
 
-.card--class {
+.card--class-26 {
+  background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+  border-left: 4px solid #7c3aed;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+}
+
+.card--class-27 {
   background: linear-gradient(135deg, #e8f4fd 0%, #d4e8fc 100%);
   border-left: 4px solid #3b82f6;
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
@@ -99,13 +105,48 @@ h1 {
   color: #b45309;
 }
 
-.card--class h2 {
+.card--class-26 h2 {
+  color: #6d28d9;
+}
+
+.card--class-27 h2 {
   color: #1d4ed8;
 }
 
 .card p {
   font-size: 0.95rem;
   color: #4a4a6a;
+}
+
+.mensaje-clase {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.btn-mensaje {
+  margin-top: 1rem;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: white;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-mensaje:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-mensaje:active {
+  transform: translateY(0);
 }
 
 footer {
