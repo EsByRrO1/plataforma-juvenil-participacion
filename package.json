@@ -1,0 +1,15 @@
+{
+  "name": "plataforma-juvenil-participacion",
+  "version": "1.0.0",
+  "description": "Plataforma educativa de participación juvenil",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
