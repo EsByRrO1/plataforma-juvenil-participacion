@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Votación Pedagógica</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main class="pagina">
+    <header class="encabezado">
+      <span class="badge">Práctica académica</span>
+      <h1>Votación Pedagógica</h1>
+      <p class="intro">
+        Simula el registro de un voto ficticio para practicar cómo una aplicación web
+        envía datos al servidor y los guarda en un archivo JSON.
+      </p>
+    </header>
+
+    <section class="seccion-voto">
+      <h2>Registrar voto</h2>
+
+      <p class="aviso">
+        Esta sección es el formulario de votación. Aquí escribes una identificación
+        inventada (no uses cédula ni datos reales) y eliges un perfil de la lista.
+        Al pulsar el botón, el navegador envía un <strong>POST</strong> a
+        <code>/api/votos</code> y el servidor guarda el voto en
+        <code>votos carpeta/votos.json</code>. Cada identificación ficticia solo puede
+        votar una vez.
+      </p>
+
+      <form class="formulario-voto" onsubmit="return false;">
+        <div class="campo-formulario">
+          <label for="identificacionVotante">Identificación ficticia</label>
+          <input
+            id="identificacionVotante"
+            type="text"
+            placeholder="Ejemplo: EST001"
+            autocomplete="off"
+          >
+        </div>
+
+        <div class="campo-formulario">
+          <label for="candidatoSeleccionado">Perfil a votar</label>
+          <select id="candidatoSeleccionado">
+            <option value="">Cargando candidatos...</option>
+          </select>
+        </div>
+
+        <button id="btnVotar" class="btn-principal" type="button">
+          Registrar voto pedagógico
+        </button>
+      </form>
+
+      <p id="mensajeVoto" class="mensaje-voto" aria-live="polite"></p>
+    </section>
+
+    <section class="seccion-voto seccion-candidatos">
+      <h2>Candidatos disponibles</h2>
+
+      <p class="texto-explicativo">
+        Esta lista se carga automáticamente desde el servidor con
+        <strong>GET /api/candidatos</strong>. Muestra los mismos perfiles ficticios
+        que ves en la página principal, para que puedas leer rol y propuesta antes
+        de elegir en el formulario de arriba.
+      </p>
+
+      <div id="contenedorCandidatosDisponibles" class="contenedor-candidatos">
+        <p class="aviso">Cargando candidatos...</p>
+      </div>
+    </section>
+
+    <section class="seccion-voto">
+      <h2>Consultar votos registrados</h2>
+
+      <p class="aviso">
+        Este bloque sirve para comprobar que los votos quedaron guardados. Al pulsar
+        el botón, la página pide los datos con <strong>GET /api/votos</strong> y los
+        muestra en tarjetas. Así puedes verificar en clase que el archivo JSON del
+        servidor recibe y devuelve información correctamente.
+      </p>
+
+      <button id="btnCargarVotos" class="btn-principal" type="button">
+        Cargar votos
+      </button>
+
+      <div id="contenedorVotos" class="contenedor-votos-registrados"></div>
+    </section>
+
+    <footer>
+      <p>Contenido ficticio · Solo fines educativos</p>
+      <p><a class="enlace-volver" href="../index.html">Volver a perfiles</a></p>
+    </footer>
+  </main>
+
+  <script>
+    const btnVotar = document.getElementById("btnVotar");
+    const mensajeVoto = document.getElementById("mensajeVoto");
+    const btnCargarVotos = document.getElementById("btnCargarVotos");
+    const contenedorVotos = document.getElementById("contenedorVotos");
+    const candidatoSeleccionado = document.getElementById("candidatoSeleccionado");
+    const contenedorCandidatosDisponibles = document.getElementById("contenedorCandidatosDisponibles");
+
+    function mostrarMensaje(texto, esExito) {
+      mensajeVoto.textContent = texto;
+      mensajeVoto.classList.remove("exito", "error");
+
+      if (esExito === true) {
+        mensajeVoto.classList.add("exito");
+      } else if (esExito === false) {
+        mensajeVoto.classList.add("error");
+      }
+    }
+
+    function rutaFoto(foto) {
+      if (!foto) {
+        return "";
+      }
+
+      if (foto.startsWith("/") || foto.startsWith("http")) {
+        return foto;
+      }
+
+      return "/" + foto;
+    }
+
+    async function cargarCandidatos() {
+      const respuesta = await fetch("/api/candidatos");
+      const candidatos = await respuesta.json();
+
+      candidatoSeleccionado.innerHTML = '<option value="">Selecciona un candidato</option>';
+      contenedorCandidatosDisponibles.innerHTML = "";
+
+      if (candidatos.length === 0) {
+        candidatoSeleccionado.innerHTML = '<option value="">No hay candidatos registrados</option>';
+        contenedorCandidatosDisponibles.innerHTML =
+          '<p class="aviso">No hay candidatos registrados todavía.</p>';
+        return;
+      }
+
+      candidatos.forEach(function (candidato) {
+        const opcion = document.createElement("option");
+        opcion.value = candidato.nombre;
+        opcion.textContent = candidato.nombre;
+        candidatoSeleccionado.appendChild(opcion);
+
+        const tarjeta = document.createElement("article");
+        tarjeta.classList.add("tarjeta-candidato");
+
+        tarjeta.innerHTML = `
+          <img
+            class="foto-candidato"
+            src="${rutaFoto(candidato.foto)}"
+            alt="Retrato ficticio de ${candidato.nombre}"
+          >
+          <h3>${candidato.nombre}</h3>
+          <p><strong>Rol:</strong> ${candidato.rol}</p>
+          <p><strong>Propuesta:</strong> ${candidato.propuesta}</p>
+          <p><strong>Estado:</strong> ${candidato.estado}</p>
+        `;
+
+        contenedorCandidatosDisponibles.appendChild(tarjeta);
+      });
+    }
+
+    btnVotar.addEventListener("click", async function () {
+      const identificacion = document.getElementById("identificacionVotante").value.trim();
+      const candidato = candidatoSeleccionado.value;
+
+      if (!identificacion || !candidato) {
+        mostrarMensaje("Completa identificación ficticia y selecciona un candidato.", false);
+        return;
+      }
+
+      const respuesta = await fetch("/api/votos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          identificacion: identificacion,
+          candidato: candidato
+        })
+      });
+
+      const resultado = await respuesta.json();
+      const texto = resultado.mensaje || resultado.error || "No se pudo registrar el voto.";
+      mostrarMensaje(texto, respuesta.ok);
+
+      if (respuesta.ok) {
+        document.getElementById("identificacionVotante").value = "";
+        candidatoSeleccionado.value = "";
+      }
+    });
+
+    async function cargarVotos() {
+      const respuesta = await fetch("/api/votos");
+      const votos = await respuesta.json();
+
+      contenedorVotos.innerHTML = "";
+
+      if (votos.length === 0) {
+        contenedorVotos.innerHTML =
+          '<p class="aviso">No hay votos registrados todavía. Registra uno en el formulario de arriba.</p>';
+        return;
+      }
+
+      votos.forEach(function (voto) {
+        const tarjeta = document.createElement("article");
+        tarjeta.classList.add("tarjeta-voto");
+
+        tarjeta.innerHTML = `
+          <h3>Voto registrado</h3>
+          <p><strong>Identificación:</strong> ${voto.identificacion}</p>
+          <p><strong>Candidato:</strong> ${voto.candidato}</p>
+          <p><strong>Fecha:</strong> ${voto.fecha}</p>
+        `;
+
+        contenedorVotos.appendChild(tarjeta);
+      });
+    }
+
+    btnCargarVotos.addEventListener("click", cargarVotos);
+
+    cargarCandidatos();
+  </script>
+</body>
+</html>

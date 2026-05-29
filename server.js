@@ -6,6 +6,8 @@ const app = express();
 const PUERTO = 3000;
 const CARPETA_CANDIDATOS = path.join(__dirname, "candidatos");
 const ARCHIVO_ORDEN = path.join(CARPETA_CANDIDATOS, "orden.json");
+const CARPETA_VOTOS = path.join(__dirname, "votos carpeta");
+const ARCHIVO_VOTOS = path.join(CARPETA_VOTOS, "votos.json");
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
@@ -85,6 +87,22 @@ function guardarCandidato(id, datos) {
   };
 }
 
+function leerVotos() {
+  if (!fs.existsSync(ARCHIVO_VOTOS)) {
+    return [];
+  }
+
+  return leerJsonArchivo(ARCHIVO_VOTOS);
+}
+
+function guardarVotos(votos) {
+  if (!fs.existsSync(CARPETA_VOTOS)) {
+    fs.mkdirSync(CARPETA_VOTOS, { recursive: true });
+  }
+
+  fs.writeFileSync(ARCHIVO_VOTOS, JSON.stringify(votos, null, 2) + "\n", "utf8");
+}
+
 app.get("/api/candidatos", function (req, res) {
   try {
     const candidatos = leerCandidatos();
@@ -115,6 +133,74 @@ app.post("/api/candidatos", function (req, res) {
     res.status(201).json(candidatoGuardado);
   } catch (error) {
     res.status(500).json({ error: "No se pudo guardar el candidato." });
+  }
+});
+
+app.get("/api/votos", function (req, res) {
+  try {
+    const votos = leerVotos();
+    res.json(votos);
+  } catch (error) {
+    res.status(500).json({ error: "No se pudieron leer los votos." });
+  }
+});
+
+app.post("/api/votos", function (req, res) {
+  try {
+    const { identificacion, candidato } = req.body;
+
+    if (!identificacion || !candidato) {
+      return res.status(400).json({
+        mensaje: "Faltan datos: identificación ficticia y candidato son obligatorios."
+      });
+    }
+
+    const identificacionLimpia = String(identificacion).trim();
+    const candidatoLimpio = String(candidato).trim();
+
+    if (!identificacionLimpia || !candidatoLimpio) {
+      return res.status(400).json({
+        mensaje: "Completa identificación ficticia y selecciona un candidato."
+      });
+    }
+
+    const candidatos = leerCandidatos();
+    const nombresCandidatos = candidatos.map(function (c) {
+      return c.nombre;
+    });
+
+    if (!nombresCandidatos.includes(candidatoLimpio)) {
+      return res.status(400).json({
+        mensaje: "El candidato seleccionado no está registrado en la plataforma."
+      });
+    }
+
+    const votos = leerVotos();
+    const yaVoto = votos.some(function (voto) {
+      return voto.identificacion.toLowerCase() === identificacionLimpia.toLowerCase();
+    });
+
+    if (yaVoto) {
+      return res.status(409).json({
+        mensaje: "Esa identificación ficticia ya registró un voto pedagógico."
+      });
+    }
+
+    const nuevoVoto = {
+      identificacion: identificacionLimpia,
+      candidato: candidatoLimpio,
+      fecha: new Date().toLocaleString("es-CO")
+    };
+
+    votos.push(nuevoVoto);
+    guardarVotos(votos);
+
+    res.status(201).json({
+      mensaje: "Voto pedagógico registrado correctamente.",
+      voto: nuevoVoto
+    });
+  } catch (error) {
+    res.status(500).json({ mensaje: "No se pudo registrar el voto." });
   }
 });
 

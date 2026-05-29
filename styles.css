@@ -75,6 +75,13 @@ h1 {
   border-radius: 12px;
 }
 
+.aviso code {
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.15em 0.45em;
+  border-radius: 6px;
+}
+
 .contenedor-candidatos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -195,4 +202,143 @@ footer {
   text-align: center;
   font-size: 0.8rem;
   color: #8888a0;
+}
+
+footer a {
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.seccion-voto {
+  margin-bottom: 2rem;
+}
+
+.seccion-voto h2 {
+  font-size: 1.25rem;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+}
+
+.texto-explicativo {
+  color: #4a4a6a;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.65;
+}
+
+.formulario-voto {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.campo-formulario label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.35rem;
+}
+
+.campo-formulario input,
+.campo-formulario select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #1a1a2e;
+  background: #fff;
+  border: 2px solid #ddd6fe;
+  border-radius: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+.btn-principal {
+  align-self: flex-start;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: white;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-principal:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-principal:active {
+  transform: translateY(0);
+}
+
+.mensaje-voto {
+  min-height: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4a4a6a;
+}
+
+.mensaje-voto.exito {
+  color: #047857;
+}
+
+.mensaje-voto.error {
+  color: #b91c1c;
+}
+
+.contenedor-votos-registrados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.tarjeta-voto {
+  background: linear-gradient(135deg, #e8f4fd 0%, #d4e8fc 100%);
+  border-left: 4px solid #3b82f6;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+}
+
+.tarjeta-voto h3 {
+  font-size: 1.05rem;
+  color: #1d4ed8;
+  margin-bottom: 0.75rem;
+}
+
+.tarjeta-voto p {
+  font-size: 0.9rem;
+  color: #4a4a6a;
+  margin-bottom: 0.5rem;
+}
+
+.enlace-volver {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #667eea;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.enlace-volver:hover {
+  text-decoration: underline;
 }
